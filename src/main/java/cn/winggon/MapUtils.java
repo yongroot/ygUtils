@@ -7,7 +7,8 @@ import java.util.function.Function;
  * Created by winggonLee on 2020/10/30
  */
 public class MapUtils {
-    private MapUtils() {}
+    private MapUtils() {
+    }
 
     /**
      * 深度拷贝map

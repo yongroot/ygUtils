@@ -8,7 +8,8 @@ import java.util.List;
  * Created by winggonLee on 2020/10/30
  */
 public class ListUtils {
-    private ListUtils(){}
+    private ListUtils() {
+    }
 
     /**
      * 集合元素转换到目标类型

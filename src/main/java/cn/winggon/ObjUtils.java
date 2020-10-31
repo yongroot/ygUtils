@@ -154,6 +154,9 @@ public class ObjUtils {
         }
         // 到达除Object外的最上层父对象时结束递归，开始收集字段
         for (Field field : clz.getDeclaredFields()) {
+            if ("serialVersionUID".equals(field.getName())) {
+                continue;
+            }
             field.setAccessible(true);
             result.add(field);
         }
