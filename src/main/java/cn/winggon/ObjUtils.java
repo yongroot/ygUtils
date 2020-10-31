@@ -1,7 +1,11 @@
 package cn.winggon;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
@@ -12,11 +16,6 @@ import java.util.function.Function;
 public class ObjUtils {
     private ObjUtils() {
     }
-
-    /**
-     * 对象字段索引缓存
-     */
-    private static Map<Class, Map<String, Field>> cacheMap = new HashMap<>();
 
     /**
      * 拷贝自身
@@ -132,16 +131,20 @@ public class ObjUtils {
     }
 
     /**
+     * 对象字段索引缓存
+     */
+    private static final Map<Class<?>, Map<String, Field>> cacheMap = new ConcurrentHashMap<>();
+
+    /**
      * 字段名称作为索引map
      */
-    private static Map<String, Field> getFieldMapping(Class clz) {
-        Map<String, Field> result = cacheMap.get(clz);
-        if (result == null) {
-            List<Field> list = new ArrayList<>();
-            collectField(clz, list);
-            cacheMap.put(clz, result = MapUtils.objMapping(list, Field::getName));
-        }
-        return result;
+    private static Map<String, Field> getFieldMapping(Class<?> clz) {
+        return cacheMap.computeIfAbsent(clz,
+                k -> {
+                    List<Field> list = new ArrayList<>();
+                    collectField(clz, list);
+                    return MapUtils.objMapping(list, Field::getName);
+                });
     }
 
     /**
