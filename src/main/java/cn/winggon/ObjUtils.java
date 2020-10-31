@@ -56,7 +56,7 @@ public class ObjUtils {
         } else if (target instanceof StringBuilder) {
             ((StringBuilder) target).append(source);
         } else if (target != null) {
-            copy(source, target, ObjUtils::checkTypeClone);
+            copy(source, target, true);
         }
     }
 
@@ -71,16 +71,16 @@ public class ObjUtils {
         } else if (targetObj instanceof StringBuilder) {
             ((StringBuilder) targetObj).append(sourceObj);
         } else if (targetObj != null) {
-            copy(sourceObj, targetObj, v -> v);
+            copy(sourceObj, targetObj, false);
         }
     }
 
     /**
      * 复制对象
      *
-     * @param fun 值传播方式
+     * @param deep 是否对值进行深度克隆
      */
-    private static void copy(Object sourceObj, Object targetObj, Function<Object, Object> fun) {
+    private static void copy(Object sourceObj, Object targetObj, boolean deep) {
         Map<String, Field> a = getFieldMapping(sourceObj.getClass());
         Map<String, Field> b = getFieldMapping(targetObj.getClass());
         Map<String, Field> targetF;
@@ -100,7 +100,7 @@ public class ObjUtils {
             if (sourceField != null) {
                 try {
                     Object value = sourceField.get(sourceObj);
-                    targetField.set(targetObj, fun.apply(value)); // 深/浅 克隆关键在于内容的钻取判断
+                    targetField.set(targetObj, deep ? checkTypeClone(value) : value); // 深/浅 克隆关键在于内容的钻取判断
                 } catch (IllegalAccessException e) {
                     //
                 }
