@@ -25,7 +25,7 @@ public class ListUtils {
     }
 
     /**
-     * 审核拷贝集合内所有元素
+     * 深度拷贝集合内所有元素
      */
     public static <T> List<T> deepClone(Collection<T> list) {
         if (isEmpty(list)) {

@@ -1,9 +1,6 @@
 package cn.winggon;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -54,6 +51,22 @@ public class MapUtils {
         for (T t : list) {
             if (t != null) {
                 result.put(keyMpper.apply(t), t);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 按规则key进行聚合分组
+     */
+    public static <T, K> Map<K, List<T>> objGrouping(Collection<T> list, Function<T, K> keyMpper) {
+        if (ListUtils.isEmpty(list)) {
+            return new HashMap<>(0);
+        }
+        Map<K, List<T>> result = new HashMap<>(guessSize(list));
+        for (T t : list) {
+            if (t != null) {
+                result.computeIfAbsent(keyMpper.apply(t), k -> new ArrayList<>()).add(t);
             }
         }
         return result;
