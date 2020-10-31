@@ -19,7 +19,7 @@ public class ListUtils {
         }
         List<T> result = new ArrayList<>(size(list));
         for (Object o : list) {
-            result.add(ObjUtils.deepCopy(o, clazz));
+            result.add(ObjUtils.deepClone(o, clazz));
         }
         return result;
     }
@@ -33,7 +33,7 @@ public class ListUtils {
         }
         List<T> result = new ArrayList<>(size(list));
         for (T t : list) {
-            result.add(ObjUtils.deepCopy(t));
+            result.add(ObjUtils.deepClone(t));
         }
         return result;
     }

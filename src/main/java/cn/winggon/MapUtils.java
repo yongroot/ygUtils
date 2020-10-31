@@ -17,7 +17,7 @@ public class MapUtils {
             return new HashMap<>(0);
         }
         Map<K, V> result = new HashMap<>(guessSize(sourceMap));
-        sourceMap.forEach(((k, v) -> result.put(k, ObjUtils.deepCopy(v))));
+        sourceMap.forEach(((k, v) -> result.put(k, ObjUtils.deepClone(v))));
         return result;
     }
 
