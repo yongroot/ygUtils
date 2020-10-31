@@ -157,6 +157,7 @@ public class ObjUtils {
             if ("serialVersionUID".equals(field.getName())) {
                 continue;
             }
+
             field.setAccessible(true);
             result.add(field);
         }
